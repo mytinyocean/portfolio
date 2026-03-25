@@ -1,99 +1,568 @@
+
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your Name | Project Manager</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Name — Sign Fabrication</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      line-height: 1.6;
-      color: #333;
-    }
-    header {
-      background: #111;
-      color: #fff;
-      padding: 40px 20px;
-      text-align: center;
-    }
-    header h1 { margin: 0; }
-    section {
-      padding: 40px 20px;
-      max-width: 1000px;
-      margin: auto;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 15px;
-    }
-    .grid img {
-      width: 100%;
-      border-radius: 8px;
-    }
-    .project {
-      margin-bottom: 40px;
-    }
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: #f4f4f4;
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+```
+:root {
+  --bg: #f5f3ef;
+  --ink: #1a1916;
+  --muted: #8a8680;
+  --rule: #d8d4ce;
+  --accent: #c8401e;
+  --card-bg: #edeae4;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'DM Mono', monospace;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── HEADER ── */
+header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  padding: 3rem 4rem 2rem;
+  border-bottom: 1px solid var(--rule);
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards;
+}
+
+.wordmark {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.wordmark span {
+  display: block;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 300;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 0.4rem;
+}
+
+nav {
+  display: flex;
+  gap: 2.5rem;
+  align-items: center;
+  padding-bottom: 0.25rem;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+
+nav a:hover { color: var(--ink); }
+
+nav a.contact {
+  color: var(--ink);
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 1px;
+}
+
+/* ── HERO ── */
+.hero {
+  padding: 6rem 4rem 5rem;
+  max-width: 700px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.15s forwards;
+}
+
+.hero h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
+}
+
+.hero h1 em {
+  font-style: normal;
+  color: var(--accent);
+}
+
+.hero p {
+  color: var(--muted);
+  font-size: 0.85rem;
+  max-width: 460px;
+  line-height: 1.9;
+}
+
+/* ── SECTION LABEL ── */
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 4rem;
+  margin-bottom: 2.5rem;
+  opacity: 0;
+  animation: fadeUp 0.7s ease 0.3s forwards;
+}
+
+.section-label span {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--rule);
+}
+
+/* ── GRID ── */
+.grid-wrap {
+  padding: 0 4rem 6rem;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.45s forwards;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.5rem;
+}
+
+/* Layout: alternating sizes */
+.card:nth-child(1)  { grid-column: span 8; }
+.card:nth-child(2)  { grid-column: span 4; }
+.card:nth-child(3)  { grid-column: span 4; }
+.card:nth-child(4)  { grid-column: span 4; }
+.card:nth-child(5)  { grid-column: span 4; }
+.card:nth-child(6)  { grid-column: span 6; }
+.card:nth-child(7)  { grid-column: span 6; }
+.card:nth-child(8)  { grid-column: span 12; }
+
+.card {
+  position: relative;
+  overflow: hidden;
+  background: var(--card-bg);
+  cursor: pointer;
+}
+
+.card-img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  display: block;
+  background: var(--card-bg);
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  /* Placeholder color bands — replace src with your images */
+}
+
+.card:nth-child(8) .card-img { aspect-ratio: 16/6; }
+.card:nth-child(2) .card-img,
+.card:nth-child(3) .card-img { aspect-ratio: 3/4; }
+
+.card:hover .card-img { transform: scale(1.03); }
+
+.card-meta {
+  padding: 0.9rem 0 0;
+}
+
+.card-meta .tag {
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.2rem;
+}
+
+.card-meta .title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1rem;
+  color: var(--ink);
+}
+
+/* Placeholder gradient images */
+.ph { width: 100%; display: block; }
+.card:nth-child(1) .ph  { aspect-ratio: 4/3;  background: linear-gradient(135deg, #d0ccc4 0%, #b8b3ab 100%); }
+.card:nth-child(2) .ph  { aspect-ratio: 3/4;  background: linear-gradient(160deg, #c4bfb8 0%, #a8a49e 100%); }
+.card:nth-child(3) .ph  { aspect-ratio: 3/4;  background: linear-gradient(145deg, #bebab3 0%, #cac6c0 100%); }
+.card:nth-child(4) .ph  { aspect-ratio: 4/3;  background: linear-gradient(135deg, #b8b4ae 0%, #ccc9c3 100%); }
+.card:nth-child(5) .ph  { aspect-ratio: 4/3;  background: linear-gradient(155deg, #c2beb8 0%, #b0aca6 100%); }
+.card:nth-child(6) .ph  { aspect-ratio: 4/3;  background: linear-gradient(140deg, #c8c4be 0%, #b4b0aa 100%); }
+.card:nth-child(7) .ph  { aspect-ratio: 4/3;  background: linear-gradient(150deg, #bcb8b2 0%, #cac7c1 100%); }
+.card:nth-child(8) .ph  { aspect-ratio: 16/6; background: linear-gradient(125deg, #b8b4ae 0%, #c6c2bc 50%, #aea9a2 100%); }
+
+.ph-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(26,25,22,0.3);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* ── CAPABILITIES ── */
+.caps-wrap {
+  border-top: 1px solid var(--rule);
+  padding: 5rem 4rem;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 4rem;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.2s both;
+  animation-play-state: paused;
+}
+
+.caps-wrap.visible { animation-play-state: running; }
+
+.caps-head {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  align-self: start;
+  position: sticky;
+  top: 2rem;
+}
+
+.caps-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.cap-item {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.cap-item:nth-child(odd) { padding-right: 2rem; border-right: 1px solid var(--rule); }
+.cap-item:nth-child(even) { padding-left: 2rem; }
+
+.cap-num {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+}
+
+.cap-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.05rem;
+}
+
+.cap-desc {
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* ── CONTACT ── */
+footer {
+  border-top: 1px solid var(--rule);
+  padding: 4rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 2rem;
+}
+
+.footer-cta h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+}
+
+.footer-cta p {
+  color: var(--muted);
+  font-size: 0.8rem;
+  max-width: 340px;
+  line-height: 1.9;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: flex-end;
+}
+
+.footer-links a {
+  text-decoration: none;
+  color: var(--ink);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover { color: var(--accent); }
+
+.footer-links a::before {
+  content: '→';
+  color: var(--accent);
+}
+
+.footer-bottom {
+  grid-column: span 2;
+  border-top: 1px solid var(--rule);
+  padding-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-bottom p {
+  font-size: 0.7rem;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  header, .hero, .section-label, .grid-wrap, .caps-wrap, footer {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .card:nth-child(n) { grid-column: span 12; }
+  .card:nth-child(2), .card:nth-child(3) { grid-column: span 6; }
+
+  .caps-wrap { grid-template-columns: 1fr; gap: 2rem; }
+  .caps-head { position: static; }
+
+  footer { grid-template-columns: 1fr; }
+  .footer-links { align-items: flex-start; }
+  .footer-bottom { grid-column: span 1; flex-direction: column; gap: 1rem; align-items: flex-start; }
+
+  nav { display: none; }
+}
+```
+
   </style>
 </head>
 <body>
 
-<header>
-  <h1>Your Name</h1>
-  <p>Project Manager | Signage & Wayfinding Specialist</p>
-</header>
+  <!-- HEADER -->
 
-<section>
-  <h2>About Me</h2>
-  <p>
-    Experienced project manager with 10+ years in signage, wayfinding, and design-build coordination. Skilled in managing large-scale projects from bid through installation.
-  </p>
-</section>
-
-<section>
-  <h2>Projects</h2>
-
-  <div class="project">
-    <h3>School District Wayfinding System</h3>
-    <p>Managed full lifecycle of signage program across multiple campuses.</p>
-    <div class="grid">
-      <img src="images/project1-1.jpg" alt="Project image">
-      <img src="images/project1-2.jpg" alt="Project image">
-      <img src="images/project1-3.jpg" alt="Project image">
+  <header>
+    <div class="wordmark">
+      Your Name
+      <span>Sign Fabrication &amp; Installation</span>
     </div>
-  </div>
+    <nav>
+      <a href="#work">Work</a>
+      <a href="#capabilities">Services</a>
+      <a href="#contact" class="contact">Contact</a>
+    </nav>
+  </header>
 
-  <div class="project">
-    <h3>Corporate Campus Signage</h3>
-    <p>Oversaw fabrication and installation for large corporate client.</p>
-    <div class="grid">
-      <img src="images/project2-1.jpg" alt="Project image">
-      <img src="images/project2-2.jpg" alt="Project image">
+  <!-- HERO -->
+
+  <section class="hero">
+    <h1>Fabricated with<br><em>precision.</em><br>Built to last.</h1>
+    <p>Based in the Pacific Northwest — channel letters, monument signs, dimensional graphics, and wayfinding systems for businesses that want to be seen.</p>
+  </section>
+
+  <!-- WORK -->
+
+  <section id="work">
+    <div class="section-label">
+      <span>Selected Work</span>
     </div>
+
+```
+<div class="grid-wrap">
+  <div class="grid">
+
+    <div class="card">
+      <!-- Replace <div class="ph"> with <img class="card-img" src="your-image.jpg" alt="..."> -->
+      <div class="ph" style="position:relative">
+        <div class="ph-label">Your photo here</div>
+      </div>
+      <div class="card-meta">
+        <div class="tag">Channel Letters</div>
+        <div class="title">Retail Storefront — Seattle, WA</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ph" style="position:relative">
+        <div class="ph-label">Your photo here</div>
+      </div>
+      <div class="card-meta">
+        <div class="tag">Monument Sign</div>
+        <div class="title">Corporate Campus Entry</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ph" style="position:relative">
+        <div class="ph-label">Your photo here</div>
+      </div>
+      <div class="card-meta">
+        <div class="tag">Dimensional</div>
+        <div class="title">Lobby Identity</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ph" style="position:relative">
+        <div class="ph-label">Your photo here</div>
+      </div>
+      <div class="card-meta">
+        <div class="tag">Wayfinding</div>
+        <div class="title">Medical Campus System</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ph" style="position:relative">
+        <div class="ph-label">Your photo here</div>
+      </div>
+      <div class="card-meta">
+        <div class="tag">Illuminated</div>
+        <div class="title">Restaurant Exterior</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ph" style="position:relative">
+        <div class="ph-label">Your photo here</div>
+      </div>
+      <div class="card-meta">
+        <div class="tag">Vehicle Graphics</div>
+        <div class="title">Fleet Wrap — 12 Units</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ph" style="position:relative">
+        <div class="ph-label">Your photo here</div>
+      </div>
+      <div class="card-meta">
+        <div class="tag">Environmental</div>
+        <div class="title">Office Branding</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ph" style="position:relative">
+        <div class="ph-label">Your photo here — wide panel works great here</div>
+      </div>
+      <div class="card-meta">
+        <div class="tag">Featured Project</div>
+        <div class="title">Mixed-Use Development — Full Signage Program</div>
+      </div>
+    </div>
+
   </div>
+</div>
+```
 
-</section>
+  </section>
 
-<section>
-  <h2>Skills</h2>
-  <ul>
-    <li>Project Management</li>
-    <li>Vendor Coordination</li>
-    <li>Wayfinding Systems</li>
-    <li>Adobe Creative Suite</li>
-    <li>Budgeting & Bidding</li>
-  </ul>
-</section>
+  <!-- CAPABILITIES -->
 
-<footer>
-  <p>Contact: your.email@example.com</p>
-</footer>
+  <section id="capabilities" class="caps-wrap">
+    <h2 class="caps-head">What we<br>fabricate.</h2>
+    <div class="caps-list">
+      <div class="cap-item">
+        <div class="cap-num">01</div>
+        <div class="cap-name">Channel Letters</div>
+        <div class="cap-desc">Illuminated and non-illuminated, front-lit, back-lit, and halo-lit options.</div>
+      </div>
+      <div class="cap-item">
+        <div class="cap-num">02</div>
+        <div class="cap-name">Monument Signs</div>
+        <div class="cap-desc">Freestanding structures in aluminum, steel, HDU foam, and stone composite.</div>
+      </div>
+      <div class="cap-item">
+        <div class="cap-num">03</div>
+        <div class="cap-name">Dimensional Graphics</div>
+        <div class="cap-desc">Lobby logos, cut letters, and brand installations for interior environments.</div>
+      </div>
+      <div class="cap-item">
+        <div class="cap-num">04</div>
+        <div class="cap-name">Wayfinding Systems</div>
+        <div class="cap-desc">Comprehensive directional and informational sign programs.</div>
+      </div>
+      <div class="cap-item">
+        <div class="cap-num">05</div>
+        <div class="cap-name">Permit &amp; Installation</div>
+        <div class="cap-desc">Full-service permitting, site surveys, structural engineering coordination, and installation.</div>
+      </div>
+      <div class="cap-item">
+        <div class="cap-num">06</div>
+        <div class="cap-name">Vehicle Graphics</div>
+        <div class="cap-desc">Fleet wraps, partial wraps, and decal programs for commercial vehicles.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT / FOOTER -->
+
+  <footer id="contact">
+    <div class="footer-cta">
+      <h2>Let's talk<br>about your<br>project.</h2>
+      <p>From initial estimate through final installation — reach out to start a conversation about what you need.</p>
+    </div>
+    <div class="footer-links">
+      <a href="mailto:you@yourdomain.com">you@yourdomain.com</a>
+      <a href="tel:+12065550000">(206) 555-0000</a>
+      <a href="#">LinkedIn</a>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Your Name. All rights reserved.</p>
+      <p>Pacific Northwest</p>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll-trigger for capabilities section
+    const caps = document.querySelector('.caps-wrap');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { caps.classList.add('visible'); observer.disconnect(); } });
+    }, { threshold: 0.15 });
+    observer.observe(caps);
+  </script>
 
 </body>
 </html>
