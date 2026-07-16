@@ -528,7 +528,7 @@ footer {
       <p>Open to new roles and project-based work in the Pacific Northwest. Whether you need a PM who knows construction, fabrication, or complex vendor programs — let's talk.</p>
     </div>
     <div class="footer-links">
-      <a href="/cdn-cgi/l/email-protection#a4ddcbd1e4ddcbd1d6c0cbc9c5cdca8ac7cbc9"><span class="__cf_email__" data-cfemail="542d3b21142d3b2126303b39353d3a7a373b39">[email&#160;protected]</span></a>
+      <a href="#" id="email-link"></a>
       <a href="tel:+12065550000">(206) 683-3452</a>
       
     </div>
@@ -538,7 +538,14 @@ footer {
     </div>
   </footer>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+  <script>
+    // Self-contained email obfuscation (no Cloudflare dependency)
+    const emailUser = "you";
+    const emailDomain = "yourdomain.com";
+    const emailLink = document.getElementById("email-link");
+    emailLink.href = "mailto:" + emailUser + "@" + emailDomain;
+    emailLink.textContent = emailUser + "@" + emailDomain;
+  </script>
   <script>
     // Scroll-trigger for capabilities section
     const caps = document.querySelector('.caps-wrap');
